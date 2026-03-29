@@ -30,17 +30,18 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Protect (app)/* routes — redirect to login if not authenticated
-  if (
-    !user &&
-    (request.nextUrl.pathname.startsWith("/dashboard") ||
-    request.nextUrl.pathname.startsWith("/progress") ||
-    request.nextUrl.pathname.startsWith("/leaderboard"))
-  ) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
-    return NextResponse.redirect(url);
-  }
+  // Auth disabled for now — all routes are public
+  // TODO: Re-enable when Google OAuth is configured
+  // if (
+  //   !user &&
+  //   (request.nextUrl.pathname.startsWith("/dashboard") ||
+  //   request.nextUrl.pathname.startsWith("/progress") ||
+  //   request.nextUrl.pathname.startsWith("/leaderboard"))
+  // ) {
+  //   const url = request.nextUrl.clone();
+  //   url.pathname = "/login";
+  //   return NextResponse.redirect(url);
+  // }
 
   return supabaseResponse;
 }
